@@ -1,0 +1,9 @@
+{
+  "name": "foxrollbot",
+  "version": "0.0.0",
+  "description": "Dice-rolling bot for Telegram",
+  "main": "main.js",
+  "repository": "foxscotch/foxrollbot-js",
+  "author": "Foxscotch <foxscotch@gmail.com> (https://foxscotch.net/)",
+  "license": "MIT"
+}
