@@ -5,5 +5,8 @@
   "main": "main.js",
   "repository": "foxscotch/foxrollbot-js",
   "author": "Foxscotch <foxscotch@gmail.com> (https://foxscotch.net/)",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "4.17.4"
+  }
 }
