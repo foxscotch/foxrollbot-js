@@ -1,11 +1,13 @@
 {
-  "locales": {
-    "en-US": {
+  "locales": [
+    {
+      "code": "en-US",
       "name": "US English"
     },
-    "pt-BR": {
+    {
+      "code": "pt-BR",
       "name": "Português do Brasil"
     }
-  },
+  ],
   "default": "en-US"
 }
