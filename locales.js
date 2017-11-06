@@ -5,6 +5,8 @@ const _ = require('lodash');
 
 
 const localesFolder = './locales';
+const interpolateRegEx = /{{([\s\S]+?)}}/g;
+const evaluateRegEx = /{%([\s\S]+?)%}/g;
 
 
 class Locales {
@@ -24,9 +26,13 @@ class Locales {
 
   compile(text) {
     return _.template(text, {
-      interpolate: /{{([\s\S]+?)}}/g,
-      evaluate: /{%([\s\S]+?)%}/g
+      interpolate: interpolateRegEx,
+      evaluate: evaluateRegEx
     });
+  }
+
+  compileFile(path) {
+    return this.compile(fs.readFileSync(path, { encoding: 'utf8' }));
   }
 }
 
