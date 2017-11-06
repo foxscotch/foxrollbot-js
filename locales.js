@@ -4,10 +4,7 @@ const path = require('path');
 const _ = require('lodash');
 const klaw = require('klaw-sync');
 
-
-const localesDir = 'locales';
-const interpolateRegEx = /{{([\s\S]+?)}}/g;
-const evaluateRegEx = /{%([\s\S]+?)%}/g;
+const conf = require('./config').locales;
 
 
 class Locales {
@@ -27,8 +24,8 @@ class Locales {
 
   compile(text) {
     return _.template(text, {
-      interpolate: interpolateRegEx,
-      evaluate: evaluateRegEx
+      interpolate: conf.interpolateRegEx,
+      evaluate: conf.evaluateRegEx
     });
   }
 
@@ -42,9 +39,9 @@ class Locales {
     this.text[locale][name] = template;
   }
 
-  addFromLocalesDir(directory=localesDir) {
+  addFromLocalesDir(directory=conf.localesDir) {
     for (let locale of this.locales) {
-      let localePath = path.join(localesDir, locale.code);
+      let localePath = path.join(conf.localesDir, locale.code);
 
       klaw(localePath, {
         nodir: true,

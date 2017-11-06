@@ -1,0 +1,10 @@
+locale:
+  locales:
+    - code: en-US
+      name: US English
+    - code: pt-BR
+      name: Português do Brasil
+  default: en-US
+  localesDir: ./locales
+  interpolateRegEx: !!js/regexp /{{([\s\S]+?)}}/g
+  evaluateRegEx: !!js/regexp /{%([\s\S]+?)%}/g

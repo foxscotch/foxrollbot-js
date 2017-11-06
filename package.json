@@ -7,6 +7,7 @@
   "author": "Foxscotch <foxscotch@gmail.com> (https://foxscotch.net/)",
   "license": "MIT",
   "dependencies": {
+    "js-yaml": "3.10.0",
     "klaw-sync": "3.0.2",
     "lodash": "4.17.4"
   }
