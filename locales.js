@@ -37,20 +37,21 @@ class Locales {
   }
 
   addTemplate(locale, name, template) {
-    this.text[locale][name] = temlpate;
+    if (typeof this.text[locale] === 'undefined')
+      this.text[locale] = {};
+    this.text[locale][name] = template;
   }
 
   addFromLocalesDir(directory=localesDir) {
-    for (let dir of fs.readdirSync(directory)) {
-      if (path.extname(dir) === '.json')
-        continue;
+    for (let locale of this.locales) {
+      let localePath = path.join(localesDir, locale.code);
 
-      klaw(dir, {
+      klaw(localePath, {
         nodir: true,
         filter: p => path.extname(p.path) === '.txt'
       }).forEach(p => {
-        let name = path.relative(dir, p.path).replace(path.sep, ':');
-        this.addTemplate(dir, name, compileFile(p.path));
+        let name = path.basename(path.relative(localePath, p.path).replace(path.sep, ':'), '.txt');
+        this.addTemplate(locale.code, name, this.compileFile(p.path));
       });
     }
   }
