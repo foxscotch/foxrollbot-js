@@ -11,9 +11,9 @@ const evaluateRegEx = /{%([\s\S]+?)%}/g;
 
 
 class Locales {
-  constructor(locales, default) {
+  constructor(locales, defaultLocale) {
     this.locales = [];
-    this.default = default;
+    this.default = defaultLocale;
     this.text = {};
 
     for (let locale of locales) {
