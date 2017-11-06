@@ -2,9 +2,10 @@ const fs = require('fs');
 const path = require('path');
 
 const _ = require('lodash');
+const klaw = require('klaw-sync');
 
 
-const localesFolder = './locales';
+const localesDir = './locales';
 const interpolateRegEx = /{{([\s\S]+?)}}/g;
 const evaluateRegEx = /{%([\s\S]+?)%}/g;
 
@@ -33,6 +34,21 @@ class Locales {
 
   compileFile(path) {
     return this.compile(fs.readFileSync(path, { encoding: 'utf8' }));
+  }
+
+  compileLocalesDir(directory=localesDir) {
+    for (let dir of fs.readdirSync(directory)) {
+      if (path.extname(dir) === '.json')
+        continue;
+
+      klaw(dir {
+        nodir: true,
+        filter: p => path.extname(p.path) === '.txt'
+      }).forEach(p => {
+        let name = path.relative(dir, p.path).replace(path.sep, ':');
+        this.addTemplate(name, compileFile(p.path));
+      });
+    }
   }
 }
 
