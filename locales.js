@@ -11,6 +11,7 @@ class Locales {
   constructor(locales, default) {
     this.locales = [];
     this.default = default;
+    this.text = {};
 
     for (let locale of locales) {
       this.locales.push(Locale(locale.code, locale.name));
