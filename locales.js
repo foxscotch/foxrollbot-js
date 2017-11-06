@@ -22,14 +22,10 @@ class Locales {
     return this.text[locale][name](context)
   }
 
-  compileTemplate(path) {
-    return new Promise((resolve, reject) => {
-      fs.readFile(path, { encoding: 'utf8' }, (err, data) => {
-        if (err)
-          reject(err);
-        else
-          resolve(_.template(data));
-      });
+  compile(text) {
+    return _.template(text, {
+      interpolate: /{{([\s\S]+?)}}/g,
+      evaluate: /{%([\s\S]+?)%}/g
     });
   }
 }
