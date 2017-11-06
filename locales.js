@@ -36,6 +36,10 @@ class Locales {
     return this.compile(fs.readFileSync(path, { encoding: 'utf8' }));
   }
 
+  addTemplate(locale, name, template) {
+    this.text[locale][name] = temlpate;
+  }
+
   addFromLocalesDir(directory=localesDir) {
     for (let dir of fs.readdirSync(directory)) {
       if (path.extname(dir) === '.json')
@@ -46,7 +50,7 @@ class Locales {
         filter: p => path.extname(p.path) === '.txt'
       }).forEach(p => {
         let name = path.relative(dir, p.path).replace(path.sep, ':');
-        this.addTemplate(name, compileFile(p.path));
+        this.addTemplate(dir, name, compileFile(p.path));
       });
     }
   }
