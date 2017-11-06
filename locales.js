@@ -36,7 +36,7 @@ class Locales {
     return this.compile(fs.readFileSync(path, { encoding: 'utf8' }));
   }
 
-  compileLocalesDir(directory=localesDir) {
+  addFromLocalesDir(directory=localesDir) {
     for (let dir of fs.readdirSync(directory)) {
       if (path.extname(dir) === '.json')
         continue;
