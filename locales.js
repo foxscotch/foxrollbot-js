@@ -17,7 +17,7 @@ class Locales {
     this.text = {};
 
     for (let locale of locales) {
-      this.locales.push(Locale(locale.code, locale.name));
+      this.locales.push(new Locale(locale.code, locale.name));
     }
   }
 
@@ -45,7 +45,7 @@ class Locales {
       if (path.extname(dir) === '.json')
         continue;
 
-      klaw(dir {
+      klaw(dir, {
         nodir: true,
         filter: p => path.extname(p.path) === '.txt'
       }).forEach(p => {
