@@ -63,3 +63,9 @@ class Locale {
     this.name = name;
   }
 }
+
+
+module.exports = {
+  Locales,
+  Locale
+}
