@@ -5,7 +5,7 @@ const _ = require('lodash');
 const klaw = require('klaw-sync');
 
 
-const localesDir = './locales';
+const localesDir = 'locales';
 const interpolateRegEx = /{{([\s\S]+?)}}/g;
 const evaluateRegEx = /{%([\s\S]+?)%}/g;
 
