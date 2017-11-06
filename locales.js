@@ -17,8 +17,8 @@ class Locales {
     }
   }
 
-  getText(textName, context={}, locale=this.default) {
-    return this.text[locale][textName](context)
+  getText(name, locale=this.default, context={}) {
+    return this.text[locale][name](context)
   }
 
   compileTemplate(path) {
