@@ -2,8 +2,6 @@ const configFile = require('js-yaml').load(
   fs.readFileSync(process.env['FRB_CONFIG_FILE'] || './config.yaml', 'utf8')
 );
 
-console.log(configFile);
-
 module.exports = {
   locale: {
     locales:    configFile.locale.locales, // No default! You MUST use a config file!
@@ -15,5 +13,3 @@ module.exports = {
     evaluateRegEx:    configFile.locale.evaluateRegEx    || /{%([\s\S]+?)%}/g
   }
 };
-
-console.log(module.exports);
