@@ -22,15 +22,15 @@ class Locales {
     return this.text[locale][name](context)
   }
 
-  compile(text) {
+  static compile(text) {
     return _.template(text, {
       interpolate: conf.interpolateRegEx,
       evaluate: conf.evaluateRegEx
     });
   }
 
-  compileFile(path) {
-    return this.compile(fs.readFileSync(path, { encoding: 'utf8' }));
+  static compileFile(path) {
+    return Locales.compile(fs.readFileSync(path, { encoding: 'utf8' }));
   }
 
   addTemplate(locale, name, template) {
@@ -41,14 +41,14 @@ class Locales {
 
   addFromLocalesDir(directory=conf.localesDir) {
     for (let locale of this.locales) {
-      let localePath = path.join(conf.localesDir, locale.code);
+      let localePath = path.join(directory, locale.code);
 
       klaw(localePath, {
         nodir: true,
         filter: p => path.extname(p.path) === '.txt'
       }).forEach(p => {
         let name = path.basename(path.relative(localePath, p.path).replace(path.sep, ':'), '.txt');
-        this.addTemplate(locale.code, name, this.compileFile(p.path));
+        this.addTemplate(locale.code, name, Locales.compileFile(p.path));
       });
     }
   }
@@ -66,4 +66,4 @@ class Locale {
 module.exports = {
   Locales,
   Locale
-}
+};
