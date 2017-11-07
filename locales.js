@@ -20,10 +20,6 @@ class Locales {
     return new Locales(conf.locales, conf.default).addFromLocalesDir();
   }
 
-  getText(name, locale=this.default, context={}) {
-    return this.text[locale][name](context)
-  }
-
   static compile(text) {
     return _.template(text, {
       interpolate: conf.interpolateRegEx,
@@ -33,6 +29,10 @@ class Locales {
 
   static compileFile(path) {
     return Locales.compile(fs.readFileSync(path, { encoding: 'utf8' }));
+  }
+
+  getText(name, locale=this.default, context={}) {
+    return this.text[locale][name](context)
   }
 
   addTemplate(locale, name, template) {
