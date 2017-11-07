@@ -4,7 +4,7 @@ const path = require('path');
 const _ = require('lodash');
 const klaw = require('klaw-sync');
 
-const conf = require('./config').locales;
+const conf = require('./config').locale;
 
 
 class Locales {
@@ -12,6 +12,12 @@ class Locales {
     this.locales = locales.map(l => new Locale(l.code, l.name));
     this.default = defaultLocale;
     this.text = {};
+  }
+
+  static createFromConfig() {
+    if (typeof conf.locales === 'undefined')
+      conf.locales = require(path.join(conf.localesDir, 'meta.json'));
+    return new Locales(conf.locales, conf.default).addFromLocalesDir();
   }
 
   getText(name, locale=this.default, context={}) {
@@ -47,6 +53,8 @@ class Locales {
         this.addTemplate(locale.code, name, Locales.compileFile(p.path));
       });
     }
+
+    return this;
   }
 }
 
