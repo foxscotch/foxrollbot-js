@@ -9,13 +9,9 @@ const conf = require('./config').locales;
 
 class Locales {
   constructor(locales, defaultLocale) {
-    this.locales = [];
+    this.locales = locales.map(l => new Locale(l.code, l.name));
     this.default = defaultLocale;
     this.text = {};
-
-    for (let locale of locales) {
-      this.locales.push(new Locale(locale.code, locale.name));
-    }
   }
 
   getText(name, locale=this.default, context={}) {
