@@ -22,8 +22,11 @@ class Locales {
    */
   constructor(locales, defaultLocale) {
     this.locales = locales.map(l => new Locale(l.code, l.name));
-    this.default = defaultLocale;
     this.text = {};
+
+    const foundLocale = this.findLocale(defaultLocale);
+    if (typeof foundLocale === 'undefined')
+      throw new Error('The configured default locale does not exist in the configured locales.');
   }
 
   /**
@@ -55,6 +58,15 @@ class Locales {
    */
   static compileFile(path) {
     return Locales.compile(fs.readFileSync(path, { encoding: 'utf8' }));
+  }
+
+  /**
+   * Finds and returns a locale in this object's list of locales.
+   * @param {string} localeCode - Locale code to search for.
+   * @returns {Locale} The matched Locale, else undefined.
+   */
+  findLocale(localeCode) {
+    return _.find(this.locales, v => v.code === locale);
   }
 
   /**
