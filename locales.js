@@ -7,19 +7,40 @@ const klaw = require('klaw-sync');
 const conf = require('./config').locale;
 
 
+/** Represents a set of locales.
+ * @property {Object[]} locales - List of locales.
+ * @property {string} default - Human-readable name for the locale.
+ * @property {Object} text - Object containing the templates for each locale.
+ */
 class Locales {
+  /**
+   * Create a set of locales.
+   * @param {Object[]} locales - List of locales to use.
+   * @param {string} locales[].code - Locale code for the locale.
+   * @param {string} locales[].name - Human-readable name for the locale.
+   * @param {string} defaultLocale - Default locale to use in Locales#getText.
+   */
   constructor(locales, defaultLocale) {
     this.locales = locales.map(l => new Locale(l.code, l.name));
     this.default = defaultLocale;
     this.text = {};
   }
 
+  /**
+   * Instantiates a Locales object using the information in the config file.
+   * @returns {Locales} The created Locales object.
+   */
   static createFromConfig() {
     if (typeof conf.locales === 'undefined')
       conf.locales = require(path.join(conf.localesDir, 'meta.json'));
     return new Locales(conf.locales, conf.default).addFromLocalesDir();
   }
 
+  /**
+   * Compiles a template.
+   * @param {string} text - Template text to compile.
+   * @returns {function} The compiled template.
+   */
   static compile(text) {
     return _.template(text, {
       interpolate: conf.interpolateRegEx,
@@ -27,20 +48,45 @@ class Locales {
     });
   }
 
+  /**
+   * Compiles a template from a file.
+   * @param {string} path - Path of template file. It should end with a .txt extension.
+   * @returns {function} The compiled template.
+   */
   static compileFile(path) {
     return Locales.compile(fs.readFileSync(path, { encoding: 'utf8' }));
   }
 
+  /**
+   * Runs the template for the chosen text name and locale. If the text does not exist for the
+   * chosen locale, or locale is unspecified, it uses the default locale instead.
+   * @param {string} name - Name of the text to retrieve.
+   * @param {string} [locale=Locales#default] - Locale code to find the text in. 
+   * @param {string} [context] - Template context.
+   */
   getText(name, locale=this.default, context={}) {
     return this.text[locale][name](context)
   }
 
+  /**
+   * Adds a template to Locales#text for the chosen locale and text name.
+   * @param {string} locale - Locale to add the text for.
+   * @param {string} name - Name to use for the text.
+   * @param {function} template - Template to add.
+   */
   addTemplate(locale, name, template) {
     if (typeof this.text[locale] === 'undefined')
       this.text[locale] = {};
     this.text[locale][name] = template;
   }
 
+  /**
+   * Adds templates from a locales directory. The root of the directory should contain folders with
+   * the names in the locales configuration, and those folders should contain the templates to be
+   * compiled.
+   * @param {string} directory - The directory to compile templates from.
+   * @returns {Locales} Returns the Locales object it was called on, for chaining.
+   */
   addFromLocalesDir(directory=conf.localesDir) {
     for (let locale of this.locales) {
       let localePath = path.join(directory, locale.code);
@@ -59,7 +105,16 @@ class Locales {
 }
 
 
+/** Represents a single locale.
+ * @property {string} code - Locale code for the locale.
+ * @property {string} name - Human-readable name for the locale.
+ */
 class Locale {
+  /**
+   * Create a locale.
+   * @param {string} code - Locale code for the locale.
+   * @param {string} name - Human-readable name for the locale.
+   */
   constructor(code, name) {
     this.code = code;
     this.name = name;
