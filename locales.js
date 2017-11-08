@@ -27,6 +27,8 @@ class Locales {
     const foundLocale = this.findLocale(defaultLocale);
     if (typeof foundLocale === 'undefined')
       throw new Error('The configured default locale does not exist in the configured locales.');
+    else
+      this.default = defaultLocale;
   }
 
   /**
@@ -66,7 +68,7 @@ class Locales {
    * @returns {Locale} The matched Locale, else undefined.
    */
   findLocale(localeCode) {
-    return _.find(this.locales, v => v.code === locale);
+    return _.find(this.locales, v => v.code === localeCode);
   }
 
   /**
@@ -74,7 +76,7 @@ class Locales {
    * chosen locale, or locale is unspecified, it uses the default locale instead.
    * @param {string} name - Name of the text to retrieve.
    * @param {string} [locale=Locales#default] - Locale code to find the text in. 
-   * @param {string} [context] - Template context.
+   * @param {Object} [context] - Template context.
    */
   getText(name, locale=this.default, context={}) {
     return this.text[locale][name](context)
