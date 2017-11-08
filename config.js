@@ -7,7 +7,7 @@ const configFile = yaml.load(
 
 module.exports = {
   locale: {
-    locales:          configFile.locale.locales, // No default! You MUST use a config file.
+    locales:          configFile.locale.locales          || [{ code: 'en-US', name: 'US English'}],
     default:          configFile.locale.default          || 'en-US',
     localesDir:       configFile.locale.localesDir       || './locales',
     interpolateRegEx: configFile.locale.interpolateRegEx || /{{([\s\S]+?)}}/g,
