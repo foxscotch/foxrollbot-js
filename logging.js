@@ -7,7 +7,7 @@ const conf = require('./config');
 
 /**
  * Interface for writing logs.
- * @interface
+ * @interface ILogWriter
  */
 class ILogWriter {
   /**
