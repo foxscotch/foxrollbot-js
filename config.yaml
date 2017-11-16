@@ -6,5 +6,6 @@ locale:
       name: Português do Brasil
   default: en-US
   localesDir: ./locales
+templates:
   interpolateRegEx: !!js/regexp /{{([\s\S]+?)}}/g
   evaluateRegEx: !!js/regexp /{%([\s\S]+?)%}/g

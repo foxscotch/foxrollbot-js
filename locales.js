@@ -4,7 +4,8 @@ const path = require('path');
 const _ = require('lodash');
 const klaw = require('klaw-sync');
 
-const conf = require('./config').locale;
+const config = require('./config');
+const { interpolateRegEx, evaluateRegEx } = config.templates
 
 
 /** Represents a set of locales.
@@ -36,9 +37,9 @@ class Locales {
    * @returns {Locales} The created Locales object.
    */
   static createFromConfig() {
-    if (typeof conf.locales === 'undefined')
-      conf.locales = require(path.join(conf.localesDir, 'meta.json'));
-    return new Locales(conf.locales, conf.default).addFromLocalesDir();
+    if (typeof config.locale.locales === 'undefined')
+      config.locale.locales = require(path.join(config.locale.localesDir, 'meta.json'));
+    return new Locales(config.locale.locales, config.locale.default).addFromLocalesDir();
   }
 
   /**
@@ -48,8 +49,8 @@ class Locales {
    */
   static compile(text) {
     return _.template(text, {
-      interpolate: conf.interpolateRegEx,
-      evaluate: conf.evaluateRegEx
+      interpolate: interpolateRegEx,
+      evaluate: evaluateRegEx
     });
   }
 
@@ -101,7 +102,7 @@ class Locales {
    * @param {string} directory - The directory to compile templates from.
    * @returns {Locales} Returns the Locales object it was called on, for chaining.
    */
-  addFromLocalesDir(directory=conf.localesDir) {
+  addFromLocalesDir(directory=config.locale.localesDir) {
     for (let locale of this.locales) {
       let localePath = path.join(directory, locale.code);
 

@@ -10,6 +10,8 @@ module.exports = {
     locales:          configFile.locale.locales          || [{ code: 'en-US', name: 'US English'}],
     default:          configFile.locale.default          || 'en-US',
     localesDir:       configFile.locale.localesDir       || './locales',
+  },
+  templates: {
     interpolateRegEx: configFile.locale.interpolateRegEx || /{{([\s\S]+?)}}/g,
     evaluateRegEx:    configFile.locale.evaluateRegEx    || /{%([\s\S]+?)%}/g
   }

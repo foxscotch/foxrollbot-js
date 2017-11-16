@@ -39,7 +39,7 @@ class FileLogWriter {
     this.level = level;
     this.file = fs.createWriteStream(path, { mode: 'a', encoding: 'utf8' });
     this.template = _.template(format + '\n', {
-      interpolate: conf.locale.interpolateRegEx
+      interpolate: conf.templates.interpolateRegEx
     });
   }
 }
