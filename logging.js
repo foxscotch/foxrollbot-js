@@ -33,7 +33,7 @@ class FileLogWriter {
    * Constructs a FileLogWriter.
    * @param {string} level - Log level for this writer to write at.
    * @param {string} path - Path of file to write logs to.
-   * @param {string} [format='{{ level }} {{ timestamp }}: {{ text }}'] - String for format of logs. A newline is added automatically, so you shouldn't add one yourself.
+   * @param {string} [format='{{ level }} {{ timestamp }}: {{ text }}'] - String for format of logs, used as a Lodash template. A newline is added automatically.
    */
   constructor(level, path, format='{{ level }} {{ timestamp }}: {{ text }}') {
     this.level = level;
